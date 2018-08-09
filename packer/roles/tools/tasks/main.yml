@@ -1,25 +1,21 @@
 ---
 
-- block:
+- name: Update using RHUI while its still attached
+  yum:
+    name: '*'
+    state: latest
 
-  - name: Update using RHUI while its still attached
-    yum:
-      name: '*'
-      state: latest
+- name: remove rhui-client packages
+  yum: name=rh-amazon-rhui-client* state=absent
 
-  - name: remove rhui-client packages
-    yum: name=rh-amazon-rhui-client* state=absent
+- name: clean yum cache
+  shell:
+    cmd: yum clean all
+    warn: false
+  ignore_errors: true
 
-  - name: clean yum cache
-    shell:
-      cmd: yum clean all
-      warn: false
-    ignore_errors: true
-
-  - name: enable Red Hat product id support in yum
-    copy: src=product-id.conf dest=/etc/yum/pluginconf.d/
-
-  when: disable_rhui
+- name: enable Red Hat product id support in yum
+  copy: src=product-id.conf dest=/etc/yum/pluginconf.d/
 
 - name: ensure organization id is supplied
   fail:
