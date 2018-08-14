@@ -3,8 +3,6 @@
 - hosts: default
 
   roles:
-    - { role: tools, tags: ['tools']}
-    - { role: authorized-key, tags: ['authorized-key']}
     - { role: instructor-user, tags: ['instructor-user']}
 
   tasks:
